@@ -2,10 +2,14 @@
 
 namespace Scopdrag\LaravelGoogleChart;
 
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\ServiceProvider;
+use Scopdrag\LaravelGoogleChart\Contracts\Factory;
+
 /**
- * 
+ *
  */
-class ChartManager implements Contracts\Factory {
+class ChartManager extends ServiceProvider implements Contracts\Factory {
 
     protected $id;
     protected $options = [];
@@ -13,6 +17,8 @@ class ChartManager implements Contracts\Factory {
     protected $cols = [];
     protected $rows = [];
     protected $chart_type = 'bar-chart';
+    protected $merchant;
+    protected $view;
 
     /**
      * setting id of chart on page
@@ -27,9 +33,26 @@ class ChartManager implements Contracts\Factory {
     public function getId() {
         return $this->id;
     }
-    
+
+    public function setMerchant($merchant_details){
+        $this->merchant = $merchant_details;
+        return $this;
+    }
+
+    public function getMerchant(){
+        return $this->merchant;
+    }
+
+    public function setView($view_page){
+        $this->view = $view_page;
+        return $this;
+    }
+
+    public function getView(){
+        return $this->view;
+    }
     /**
-     *Setting chart type  
+     *Setting chart type
      * @param type $type
      * @return \Scopdrag\LaravelGoogleChart\ChartManager
      */
@@ -39,7 +62,7 @@ class ChartManager implements Contracts\Factory {
     }
 
     /**
-     * Getting chart type 
+     * Getting chart type
      * @return type
      */
     public function getChartType() {
@@ -47,7 +70,7 @@ class ChartManager implements Contracts\Factory {
     }
 
     /**
-     * Setting options 
+     * Setting options
      * @param type $options
      * @return \Scopdrag\LaravelGoogleChart\ChartManager
      */
@@ -113,7 +136,7 @@ class ChartManager implements Contracts\Factory {
     }
 
     /**
-     * processing rows and there heads 
+     * processing rows and there heads
      * @return type
      */
     protected function processRowsHeads() {
@@ -133,12 +156,19 @@ class ChartManager implements Contracts\Factory {
         $this->setId();
         $id = $this->id;
         $this->processRowsHeads();
-        return view('LaravelGoogleChart::' . $this->getChartType())
-                        ->with(['options' => $this->options,
-                            'id' => $this->id,
-                            'data' => $this->data])->render();
+        Log::info($this->merchant);
+//        return view('LaravelGoogleChart::' . $this->getChartType())
+//                        ->with(['options' => $this->options,
+//                            'id' => $this->id,
+//                            'data' => $this->data,
+//                            'merchant'=> $this->getMerchant()])->render();
+        return view('merchant.'. $this->getView())
+            ->with(['options' => $this->options,
+                'id' => $this->id,
+                'data' => $this->data,
+                'merchant'=> $this->merchant])->render();
     }
-    
-     
+
+
 
 }
