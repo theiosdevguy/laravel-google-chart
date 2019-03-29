@@ -3,13 +3,12 @@
 namespace Scopdrag\LaravelGoogleChart;
 
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\ServiceProvider;
 use Scopdrag\LaravelGoogleChart\Contracts\Factory;
 
 /**
  *
  */
-class ChartManager extends ServiceProvider implements Contracts\Factory {
+class ChartManager implements Contracts\Factory {
 
     protected $id;
     protected $options = [];
