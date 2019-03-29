@@ -21,7 +21,7 @@ class ChartManager implements Contracts\Factory {
      * setting id of chart on page
      */
     public function setId() {
-        $this->id = microtime(TRUE);
+        $this->id = microtime(FALSE);
     }
     /**
      * getting chart id
