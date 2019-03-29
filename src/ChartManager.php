@@ -17,8 +17,6 @@ class ChartManager extends ServiceProvider implements Contracts\Factory {
     protected $cols = [];
     protected $rows = [];
     protected $chart_type = 'bar-chart';
-    protected $merchant;
-    protected $view;
 
     /**
      * setting id of chart on page
@@ -32,24 +30,6 @@ class ChartManager extends ServiceProvider implements Contracts\Factory {
      */
     public function getId() {
         return $this->id;
-    }
-
-    public function setMerchant($merchant_details){
-        $this->merchant = $merchant_details;
-        return $this;
-    }
-
-    public function getMerchant(){
-        return $this->merchant;
-    }
-
-    public function setView($view_page){
-        $this->view = $view_page;
-        return $this;
-    }
-
-    public function getView(){
-        return $this->view;
     }
     /**
      *Setting chart type
@@ -154,19 +134,9 @@ class ChartManager extends ServiceProvider implements Contracts\Factory {
      */
     public function render() {
         $this->setId();
-        $id = $this->id;
         $this->processRowsHeads();
-        Log::info($this->merchant);
-//        return view('LaravelGoogleChart::' . $this->getChartType())
-//                        ->with(['options' => $this->options,
-//                            'id' => $this->id,
-//                            'data' => $this->data,
-//                            'merchant'=> $this->getMerchant()])->render();
-        return view('merchant.'. $this->getView())
-            ->with(['options' => $this->options,
-                'id' => $this->id,
-                'data' => $this->data,
-                'merchant'=> $this->merchant])->render();
+
+        return (['options' => $this->options, 'id' => $this->id, 'data' => $this->data]);
     }
 
 

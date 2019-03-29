@@ -22,12 +22,4 @@ interface Factory {
 
     public function render();
 
-    public function setMerchant($merchant_details);
-
-    public function getMerchant();
-
-    public function setView($view_page);
-
-    public function getView();
-
 }
